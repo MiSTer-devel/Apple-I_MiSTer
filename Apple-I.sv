@@ -184,9 +184,6 @@ hps_io #(.STRLEN(($size(CONF_STR)>>3) ), .PS2DIV(4000)/*, .WIDE(0)*/) hps_io
 	.ps2_kbd_data_out   ( ps2_kbd_data   )
 );
 
-wire reset;
-wire rom_download = ioctl_download && !ioctl_index;
-assign reset = (RESET | status[0] | buttons[1] | rom_download  );
 
 wire ps2_kbd_clk;
 wire ps2_kbd_data;
