@@ -3,6 +3,9 @@
 # MiSTer port of Apple-I
 
 
+[Original Github Repo](https://github.com/alangarf/apple-one)
+
+
 This is a basic implementation of the original Apple 1 in Verilog. It can run the Apple 1 WozMon and Integer Basic via the serial or VGA 640x480 video with PS/2 keyboard standalone. This makes this a very compact little set up. So far fully tested and supported boards are:
 - [iCE40HX8K-B-EVN breakout](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
 - [Terasic DE0](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=364)
