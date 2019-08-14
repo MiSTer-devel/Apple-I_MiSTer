@@ -15,7 +15,7 @@ module emu
 	input         RESET,
 
 	//Must be passed to hps_io module
-	inout  [44:0] HPS_BUS,
+	inout  [45:0] HPS_BUS,
 
 	//Base video clock. Usually equals to CLK_SYS.
 	output        CLK_VIDEO,
@@ -148,10 +148,10 @@ wire [31:0] status;
 wire  [1:0] buttons;
 wire        ioctl_download;
 wire        ioctl_wr;
-wire [13:0] ioctl_addr;
+wire [15:0] ioctl_addr;
 wire [7:0] ioctl_data;
 wire  [7:0] ioctl_index;
-
+reg ioctl_wait=0;
 wire        forced_scandoubler;
 wire [10:0] ps2_key;
 //wire [24:0] ps2_mouse;
@@ -179,6 +179,7 @@ hps_io #(.STRLEN(($size(CONF_STR)>>3) ), .PS2DIV(4000)/*, .WIDE(0)*/) hps_io
 	.ioctl_addr(ioctl_addr),
 	.ioctl_dout(ioctl_data),
 	.ioctl_index(ioctl_index),
+	.ioctl_wait(ioctl_wait),
 	
 	.ps2_kbd_clk_out    ( ps2_kbd_clk    ),
 	.ps2_kbd_data_out   ( ps2_kbd_data   )

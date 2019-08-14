@@ -37,6 +37,7 @@ uint32_t cycles;
 #define IOCTL_DOWNLOAD top->applei_verilator__DOT__ioctl_download
 #define IOCTL_DATA top->applei_verilator__DOT__ioctl_data
 #define IOCTL_ADDR top->applei_verilator__DOT__ioctl_addr
+#define IOCTL_WAIT top->applei_verilator__DOT__ioctl_wait
 
 
 
@@ -116,10 +117,8 @@ int main(int argc, char** argv)
     Verilated::commandArgs(argc, argv);   // Remember args
 
     int download=0;
-    char dlstr[] = "HELLO\n";
-    char dlstr2[] = "TWO\r";
-    char *dlstrpos= dlstr;
-    int downloadbytes=strlen(dlstr);
+    char *dlstrpos= NULL;
+    int downloadbytes=0;
 
     int show_loops = 0;
     int show_waves = 0;
@@ -192,12 +191,16 @@ int main(int argc, char** argv)
 IOCTL_DOWNLOAD=0x0;
 IOCTL_DATA=0x0;
 IOCTL_ADDR=0x0;
+IOCTL_WAIT=0x0;
+int nextaddr=0x0;
 
 
 	FILE *infile =NULL;
 	printf("fname: %s\n",fname);
-	if (strlen(fname))
+	if (strlen(fname)) {
        		infile=fopen(fname,"r");
+		downloadbytes=100;
+	}
 
 #if 0
     if (1) {
@@ -282,39 +285,35 @@ IOCTL_ADDR=0x0;
 
 
         if (main_time > 50000000)  {
-    			if (downloadbytes>0 && CLK==1) {
+    			if (downloadbytes>0 && CLK==1)  {
+				if (IOCTL_WAIT==0) {
 				int curchar;
 				IOCTL_DOWNLOAD=0x01;
 				downloadbytes--;
-				if (infile) if (feof(infile)) { fclose(infile);infile=NULL;downloadbytes=0;};
+				if (infile) if (feof(infile)) { fclose(infile);infile=NULL;downloadbytes=0; IOCTL_DOWNLOAD=0x0;};
 				if (infile) curchar=fgetc(infile);
-				if (infile) {
+				if (curchar<0) { fclose(infile); infile=NULL;downloadbytes=0;IOCTL_DOWNLOAD=0x00;};
+				if (infile && curchar>0) {
 					IOCTL_DATA=(char)curchar;
+ 					nextaddr++;
 					downloadbytes=100;
 				}
+					printf("IOCTL_DATA: %x %x %x\n",IOCTL_DATA,IOCTL_ADDR,IOCTL_DOWNLOAD);
+                                }
 				else {
-					IOCTL_DATA=*dlstrpos++;
+					//printf("WAIT IOCTL_DATA: %x %x %x\n",IOCTL_DATA,IOCTL_ADDR,IOCTL_DOWNLOAD);
 				}
-printf("IOCTL_DATA: %x %x %x\n",IOCTL_DATA,IOCTL_ADDR,IOCTL_DOWNLOAD);
-			}
-			else 
+			} else
 				IOCTL_DOWNLOAD=0x0;
-	}
-        if (main_time > 100000000 && download==0)  {
-		printf("restart\n");
-    		dlstrpos= dlstr2;
-		IOCTL_ADDR=0x00;
-		IOCTL_DOWNLOAD=0x0;
-		downloadbytes=strlen(dlstr2);
-		download=1;
 	}
 
 	// evaluate model
         top->eval();
 
-        if (IOCTL_DOWNLOAD && downloadbytes>0 && CLK==1) {
-				IOCTL_ADDR=IOCTL_ADDR+1;
-	}
+	IOCTL_ADDR=nextaddr;
+        //if (IOCTL_DOWNLOAD && downloadbytes>0 && CLK==1 && IOCTL_WAIT==0) {
+//		IOCTL_ADDR=IOCTL_ADDR+1;
+//	}
 
 	//
 #if 0

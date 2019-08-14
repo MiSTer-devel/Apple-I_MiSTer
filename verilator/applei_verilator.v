@@ -29,10 +29,10 @@ module applei_verilator;
 
    reg clk/*verilator public_flat*/;
    reg reset/*verilator public_flat*/;
-
+   reg ioctl_wait /*verilator public_flat*/;
    reg ioctl_download/*verilator public_flat*/;
    reg [7:0] ioctl_data/*verilator public_flat*/;
-   reg [12:0] ioctl_addr/*verilator public_flat*/;
+   reg [15:0] ioctl_addr/*verilator public_flat*/;
 
    wire [8:0] rgb;
    wire       csync, hsync, vsync, hblank, vblank;

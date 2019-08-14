@@ -48,7 +48,7 @@ module apple1(
 	 // load text files directly
 	 input ioctl_download,
 	 input [7:0] textinput_dout, 
-	 input [12:0] textinput_addr,
+	 input [15:0] textinput_addr,
 	 
     // Debugging ports
     output [15:0] pc_monitor    // spy for program counter / debugging
