@@ -2,6 +2,8 @@
 
 # MiSTer port of Apple-I
 
+Use the OSD to load a txt file that contains either hex values that you would type into the console or basic. If you are going to load basic, first load the basic hex file, then load the basic file afterwards.
+
 ##  Original apple-one by Alan Garfield
 [Original Github Repo](https://github.com/alangarf/apple-one)
 
