@@ -21,7 +21,9 @@
 // Date.......: 3-2-2018
 //
 
-module font_rom (
+module font_rom #(
+    parameter FONT_ROM_FILENAME   = "../../../roms/vga_font_bitreversed.hex"
+) (
     input clk,              // clock signal
     input [1:0] mode,       // character mode
     input [5:0] character,  // address bus
@@ -33,7 +35,7 @@ module font_rom (
     reg [7:0] rom[0:1023];
 
     initial
-        $readmemh("roms/vga_font_bitreversed.hex", rom, 0, 1023);
+        $readmemh(FONT_ROM_FILENAME, rom, 0, 1023);
 
     // double height of pixel by ignoring bit 0
     wire [3:0] line_ptr = line[4:1];

@@ -2,9 +2,10 @@
 
 # MiSTer port of Apple-I
 
-
+##  Original apple-one by Alan Garfield
 [Original Github Repo](https://github.com/alangarf/apple-one)
 
+![Apple One](media/apple-logo.png)
 
 This is a basic implementation of the original Apple 1 in Verilog. It can run the Apple 1 WozMon and Integer Basic via the serial or VGA 640x480 video with PS/2 keyboard standalone. This makes this a very compact little set up. So far fully tested and supported boards are:
 - [iCE40HX8K-B-EVN breakout](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
@@ -17,6 +18,9 @@ Contributor supported boards (YMMV):
 - [TinyFPGA B2](http://tinyfpga.com/)
 - [Upduino](http://gnarlygrey.atspace.cc/development-platform.html)
 
+ <p align="center">
+  <img src="media/apple-one.png" alt="Apple One Running">
+ </p>
 
 This project borrows heavily from the *awesome* work of Andrew Holme and his ["Pool"](http://www.aholme.co.uk/6502/Main.htm) project and [Arlet Otten's](https://github.com/Arlet/verilog-6502) tiny 6502 core. Also many special thanks to ["sbprojects.com"](https://www.sbprojects.com/projects/apple1/index.php) for the wealth of information I gleaned from there.
 
@@ -28,7 +32,7 @@ The memory map is currently set up to have:
  ----- | --- | -----------
  0x0000 | 0x1FFF | 8KB of block RAM for system
  0xE000 | 0xEFFF | 4KB of block RAM for basic ROM
- 0xFF00 | 0xFFFF | 512B of block RAM for WozMon ROM
+ 0xFF00 | 0xFFFF | 256B of block RAM for WozMon ROM
 
 You can swap out the Basic ROM to get more RAM if you need the space, this can be achieved easily with only minor modifications to the top file.
  

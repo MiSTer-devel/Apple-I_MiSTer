@@ -22,7 +22,13 @@
 // Date.......: 26-1-2018
 //
 
-module apple1(
+module apple1 #(
+    parameter BASIC_FILENAME      = "../../../roms/basic.hex",
+    parameter FONT_ROM_FILENAME   = "../../../roms/vga_font_bitreversed.hex",
+    parameter RAM_FILENAME        = "../../../roms/ram.hex",
+    parameter VRAM_FILENAME       = "../../../roms/vga_vram.bin",
+    parameter WOZMON_ROM_FILENAME = "../../../roms/wozmon.hex"
+) (
     input  clk25,               // 25 MHz master clock
     input  rst_n,               // active low synchronous reset (needed for simulation)
 
@@ -45,10 +51,10 @@ module apple1(
     input vga_cls,              // clear screen button
     output vga_de,
 	 
-	 // load text files directly
-	 input ioctl_download,
-	 input [7:0] textinput_dout, 
-	 input [15:0] textinput_addr,
+    // load text files directly
+    input ioctl_download,       // download available
+    input [7:0] textinput_dout, // text data
+    input [15:0] textinput_addr,// text address
 	 
     // Debugging ports
     output [15:0] pc_monitor    // spy for program counter / debugging
@@ -130,7 +136,9 @@ module apple1(
 
     // RAM
     wire [7:0] ram_dout;
-    ram ram(
+    ram #(
+        .RAM_FILENAME (RAM_FILENAME)
+    ) my_ram(
         .clk(clk25),
         .address(ab[12:0]),
         .w_en(we & ram_cs),
@@ -140,7 +148,9 @@ module apple1(
 
     // WozMon ROM
     wire [7:0] rom_dout;
-    rom_wozmon rom_wozmon(
+    rom_wozmon #(
+        .WOZMON_ROM_FILENAME (WOZMON_ROM_FILENAME)
+    ) my_rom_wozmon(
         .clk(clk25),
         .address(ab[7:0]),
         .dout(rom_dout)
@@ -148,7 +158,9 @@ module apple1(
 
     // Basic ROM
     wire [7:0] basic_dout;
-    rom_basic rom_basic(
+    rom_basic #(
+        .BASIC_FILENAME (BASIC_FILENAME)
+    ) my_rom_basic(
         .clk(clk25),
         .address(ab[11:0]),
         .dout(basic_dout)
@@ -215,7 +227,10 @@ module apple1(
     reg [1:0] font_mode;
     reg [7:0] vga_mode_dout;
 
-    vga vga(
+    vga #(
+        .VRAM_FILENAME (VRAM_FILENAME),
+        .FONT_ROM_FILENAME (FONT_ROM_FILENAME)
+    ) my_vga(
         .clk25(clk25),
         .enable(vga_cs & cpu_clken),
         .rst(rst),

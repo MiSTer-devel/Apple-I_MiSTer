@@ -1,4 +1,29 @@
-module vga (
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+//
+// Description: 40x24 character display for Apple1
+//
+// Author.....: Alan Garfield
+// Date.......: 27-1-2018
+//
+module vga #(
+    parameter VRAM_FILENAME       = "../../../roms/vga_vram.bin",
+    parameter FONT_ROM_FILENAME   = "../../../roms/vga_font_bitreversed.hex"
+) (
     input clk25,            // clock signal
     input enable,           // clock enable strobe,
     input rst,              // active high reset signal
@@ -7,7 +32,7 @@ module vga (
     output vga_red,         // red VGA signal
     output vga_grn,         // green VGA signal
     output vga_blu,         // blue VGA signal
-	 output vga_de,
+    output vga_de,
     input address,          // address bus
     input w_en,             // active high write enable strobe
     input [7:0] din,        // 8-bit data bus (input)
@@ -17,7 +42,6 @@ module vga (
     input clr_screen        // clear screen button
 );
 
-assign vga_de = h_active & v_active;
     //////////////////////////////////////////////////////////////////////////
     // Registers and Parameters
 
@@ -70,6 +94,7 @@ assign vga_de = h_active & v_active;
     wire v_active;
     assign h_active = (h_cnt >= hbp && h_cnt < hfp);
     assign v_active = (v_cnt >= vbp && v_cnt < vfp);
+    assign vga_de = h_active & v_active;
 
     //////////////////////////////////////////////////////////////////////////
     // VGA Sync Generation
@@ -121,7 +146,9 @@ assign vga_de = h_active & v_active;
     //////////////////////////////////////////////////////////////////////////
     // Character ROM
 
-    font_rom font_rom(
+    font_rom #(
+        .FONT_ROM_FILENAME (FONT_ROM_FILENAME)
+    ) my_font_rom(
         .clk(clk25),
         .mode(mode),
         .character(font_char),
@@ -133,7 +160,9 @@ assign vga_de = h_active & v_active;
     //////////////////////////////////////////////////////////////////////////
     // Video RAM
 
-    vram vram(
+    vram #(
+        .VRAM_FILENAME (VRAM_FILENAME)
+    ) my_vram(
         .clk(clk25),
         .read_addr(vram_r_addr),
         .write_addr(vram_w_addr),

@@ -22,7 +22,9 @@
 // Date.......: 26-1-2018
 //
 
-module rom_basic (
+module rom_basic #(
+    parameter BASIC_FILENAME = "../../../roms/basic.hex"
+) (
     input clk,              // clock signal
     input [11:0] address,   // address bus
     output reg [7:0] dout   // 8-bit data bus (output)
@@ -31,7 +33,7 @@ module rom_basic (
     reg [7:0] rom_data[0:4095];
 
     initial
-        $readmemh("roms/basic.hex", rom_data, 0, 4095);
+        $readmemh(BASIC_FILENAME, rom_data, 0, 4095);
 
     always @(posedge clk)
         dout <= rom_data[address];

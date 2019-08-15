@@ -22,7 +22,9 @@
 // Date.......: 26-1-2018
 //
 
-module ram (
+module ram #(
+    parameter RAM_FILENAME        = "../../../roms/ram.hex"
+) (
     input clk,              // clock signal
     input [12:0] address,   // address bus
     input w_en,             // active high write enable strobe
@@ -33,7 +35,7 @@ module ram (
     reg [7:0] ram_data[0:8191];
 
     initial
-        $readmemh("roms/ram.hex", ram_data, 0, 8191);
+        $readmemh(RAM_FILENAME, ram_data, 0, 8191);
 
     always @(posedge clk)
     begin

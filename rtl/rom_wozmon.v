@@ -22,7 +22,9 @@
 // Date.......: 26-1-2018
 //
 
-module rom_wozmon (
+module rom_wozmon #(
+    parameter WOZMON_ROM_FILENAME = "../../../roms/wozmon.hex"
+) (
     input clk,              // clock signal
     input [7:0] address,    // address bus
     output reg [7:0] dout   // 8-bit data bus (output)
@@ -31,7 +33,7 @@ module rom_wozmon (
     reg [7:0] rom_data[0:255];
 
     initial
-        $readmemh("roms/wozmon.hex", rom_data, 0, 255);
+        $readmemh(WOZMON_ROM_FILENAME, rom_data, 0, 255);
 
     always @(posedge clk)
         dout <= rom_data[address];

@@ -7,7 +7,7 @@ V = verilator
 #V = /usr/local/src/verilator-3.876/bin/verilator
 
 TOP = --top-module applei_verilator
-RTL = ../rtl
+RTL = ../../rtl
 CPU = ../6502/bc
 ROM = ../roms/v3
 INC = +incdir+$(RTL) +incdir+$(CPU) +incdir+$(ROM)
@@ -24,18 +24,18 @@ applei_verilator.v \
 $(RTL)/apple1.v \
 $(RTL)/clock.v \
 $(RTL)/pwr_reset.v \
-$(RTL)/arlet_6502.v \
+$(RTL)/cpu/arlet_6502.v \
 $(RTL)/ram.v \
 $(RTL)/rom_basic.v \
 $(RTL)/rom_wozmon.v \
-$(RTL)/vram.v \
-$(RTL)/uart.v \
-$(RTL)/ps2keyboard.v \
-$(RTL)/vga.v \
-$(RTL)/async_tx_rx.v \
-$(RTL)/font_rom.v \
-$(RTL)/cpu.v \
-$(RTL)/ALU.v \
+$(RTL)/vga/vram.v \
+$(RTL)/uart/uart.v \
+$(RTL)/ps2keyboard/ps2keyboard.v \
+$(RTL)/vga/vga.v \
+$(RTL)/uart/async_tx_rx.v \
+$(RTL)/vga/font_rom.v \
+$(RTL)/cpu/arlet/cpu.v \
+$(RTL)/cpu/arlet/ALU.v \
 $(RTL)/ascii_input.v \
 
 

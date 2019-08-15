@@ -25,7 +25,13 @@ end
 assign clock_out = (counter<DIVISOR/2)?1'b0:1'b1;
 endmodule
 
-module applei_verilator;
+module applei_verilator #(
+    parameter BASIC_FILENAME      = "../../roms/basic.hex",
+    parameter FONT_ROM_FILENAME   = "../../roms/vga_font_bitreversed.hex",
+    parameter RAM_FILENAME        = "../../roms/ram.hex",
+    parameter VRAM_FILENAME       = "../../roms/vga_vram.bin",
+    parameter WOZMON_ROM_FILENAME = "../../roms/wozmon.hex"
+);
 
    reg clk/*verilator public_flat*/;
    reg reset/*verilator public_flat*/;
@@ -50,8 +56,13 @@ wire r,g,b;
 wire ps2_clk;
 Clock_divider #(1000) cdiv (clk,ps2_clk);
 
-
-apple1 apple1 (
+    apple1 #(
+        .BASIC_FILENAME (BASIC_FILENAME),
+        .FONT_ROM_FILENAME (FONT_ROM_FILENAME),
+        .RAM_FILENAME (RAM_FILENAME),
+        .VRAM_FILENAME (VRAM_FILENAME),
+        .WOZMON_ROM_FILENAME (WOZMON_ROM_FILENAME)
+    ) apple1 (
         .clk25(clk),
         .rst_n(~reset),
         .uart_rx(),

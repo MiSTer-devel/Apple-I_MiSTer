@@ -22,7 +22,9 @@
 // Date.......: 26-1-2018
 //
 
-module vram (
+module vram #(
+    parameter VRAM_FILENAME       = "../../../roms/vga_vram.bin"
+) (
     input clk,                  // clock signal
     input [10:0] read_addr,      // read address bus
     input [10:0] write_addr,     // write address bus
@@ -35,7 +37,7 @@ module vram (
     reg [5:0] ram_data[0:2047];
 
     initial
-        $readmemb("roms/vga_vram.bin", ram_data, 0, 2047);
+        $readmemb(VRAM_FILENAME, ram_data, 0, 2047);
 
     always @(posedge clk)
     begin
