@@ -1,4 +1,6 @@
 set_global_assignment -name SYSTEMVERILOG_FILE Apple-I.sv
+set_global_assignment -name VERILOG_FILE ../../rtl/pll/pll_0002.v
+set_global_assignment -name VERILOG_FILE ../../rtl/pll.v
 set_global_assignment -name VERILOG_FILE ../../rtl/apple1.v
 set_global_assignment -name VERILOG_FILE ../../rtl/clock.v
 set_global_assignment -name VERILOG_FILE ../../rtl/pwr_reset.v
