@@ -18,4 +18,3 @@ set_global_assignment -name VERILOG_FILE ../../rtl/vga/font_rom.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cpu/arlet/cpu.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cpu/arlet/ALU.v
 set_global_assignment -name QIP_FILE sys/sys.qip
-
