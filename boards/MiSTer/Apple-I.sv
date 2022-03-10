@@ -216,7 +216,7 @@ reg ioctl_wait=0;
 
 wire [15:0] joystick_0, joystick_1;
 
-hps_io #(.CONF_STR(CONF_STR)) hps_io
+hps_io #(.CONF_STR(CONF_STR),.PS2DIV(4000)) hps_io
 (
 	.clk_sys(clk_sys),
 	.HPS_BUS(HPS_BUS),
