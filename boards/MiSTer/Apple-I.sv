@@ -197,6 +197,7 @@ localparam CONF_STR = {
 	"F,TXT,Load Ascii;",
 //	"F,CAS,Load Cassette;",
 	"O1,Scanlines,Off,On;",
+	"O2,RAM Size,8K,32K;",
 	"-;",
 	"R0,Reset;",
 	"V,v",`BUILD_DATE
@@ -303,7 +304,8 @@ apple1 apple1 (
    .ioctl_download(ioctl_download && ioctl_index),
    .textinput_dout(ioctl_data),
    .textinput_addr(ioctl_addr[12:0]),
-   .pc_monitor()
+   .pc_monitor(),
+   .large_ram(status[2])
 );
 
 assign CLK_VIDEO = clk25;
