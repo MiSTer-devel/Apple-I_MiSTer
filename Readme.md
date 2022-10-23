@@ -32,7 +32,8 @@ The memory map is currently set up to have:
 
  Start | End | Description
  ----- | --- | -----------
- 0x0000 | 0x1FFF | 8KB of block RAM for system
+ 0x0000 | 0x1FFF | 8KB of block RAM for system (default 8K option)
+ 0x0000 | 0x7FFF | 32KB of block RAM for system (32K option)
  0xE000 | 0xEFFF | 4KB of block RAM for basic ROM
  0xFF00 | 0xFFFF | 256B of block RAM for WozMon ROM
 
